@@ -50,7 +50,7 @@ def project_settings():
 
 
 def mesh_file(root, project, type_, name_, quality="LD"):
-    filename = concat(name_, "_MOD_", quality, ".obj")
+    filename = concat(name_, "_MOD_", quality, ".abc")
     return concat(root, project, "DATA/LIB/PUBLISH", type_, name_, "MOD", quality, filename,
                   separator="/")
 
