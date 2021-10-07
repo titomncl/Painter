@@ -1,4 +1,12 @@
 import os
+import sys
+
+if sys.version_info > (3,):
+    import typing
+
+    if typing.TYPE_CHECKING:
+        from Odin import Asset, Shot
+        from typing import Optional, Union
 
 from collections import OrderedDict
 
@@ -35,12 +43,8 @@ class SaveLoad(object):
     def buttons(self):
         buttons = OrderedDict()
 
-        buttons["SHD"] = {
-            "CHARA": True,
-            "PROPS": True,
-            "SET": True,
-            "FX": False,
-        }
+        buttons["Assets"] = ["SHD"]
+        buttons["Shots"] = []
 
         return buttons
 
@@ -72,15 +76,13 @@ class SaveLoad(object):
             e = concat(file_, " is incorrect.")
             raise ValueError(e)
 
-    def file_to_load(self, type_, name, task):
+    def file_to_load(self, path):
 
-        filepath_ = concat(PROJECT_PATH, "DATA/LIB", type_, name, task, "SCENES/VERSION", separator="/")
+        last_file = self.get_last_file(path)
 
-        last_file = self.get_last_file(filepath_)
+        filepath = concat(path, last_file, separator="/")
 
-        filepath_ = concat(filepath_, last_file, separator="/")
-
-        return filepath_
+        return filepath
 
     @staticmethod
     def get_last_file(path):
@@ -99,15 +101,12 @@ class SaveLoad(object):
         else:
             raise RuntimeError("No files found.")
 
-    def save(self, type_="", name_="", task_=""):
-        """
+    def save(self, item="", dpt=""):
+        # type: (Optional[Union[Asset, Shot]], str) -> None
+        """.
         Args:
-            type_ (str): chara, props, set
-            name_ (str): name of the asset
-            task_ (str): department of the file: MOD, RIG, SHD
-
-        Returns:
-            str, str: versioned and published filepath
+            item: name of the asset
+            dpt: department of the file: MOD, RIG, SHD
 
         """
         if self.filepath:
@@ -122,12 +121,26 @@ class SaveLoad(object):
 
             save_as(new_filepath)
         else:
-            filename = concat(name_, task_, "001" + PAINTER_EXT, separator="_")
-            filepath_ = concat(PROJECT_PATH, "DATA/LIB", type_, name_, task_, "SCENES/VERSION", filename, separator="/")
+            path = os.path.join(item.paths["PATH"], item.name, dpt).replace("\\", "/")
+            path = self.glob_recursive(path, "VERSION")
+
+            filename = concat(item.name, dpt, "001" + PAINTER_EXT, separator="_")
+            filepath_ = concat(path, filename, separator="/")
 
             save_as(filepath_)
 
-    def load(self, type_, name_, task_):
-        file_ = self.file_to_load(type_, name_, task_)
+    def load(self, item, dpt):
+        path = os.path.join(item.paths["PATH"], item.name, dpt).replace("\\", "/")
+
+        path = self.glob_recursive(path, "VERSION")
+
+        file_ = self.file_to_load(path)
 
         open_file(file_)
+
+    def glob_recursive(self, path, endswith):
+        for dir_path, dirs, _ in os.walk(path):
+            for dir in dirs:
+                file_path = os.path.join(dir_path, dir).replace("\\", "/")
+                if file_path.endswith(endswith):
+                    return file_path
