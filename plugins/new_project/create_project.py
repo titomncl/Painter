@@ -41,7 +41,6 @@ class Create(object):
         except TypeError:
             return None
 
-
     @property
     def buttons(self):
         buttons = OrderedDict()
@@ -51,7 +50,8 @@ class Create(object):
 
         return buttons
 
-    def save(self, item="", dpt=""):
+    @staticmethod
+    def save(item="", dpt=""):
         # type: (Optional[Union[Asset, Shot]], str) -> None
         """.
         Args:
@@ -77,6 +77,6 @@ class Create(object):
 
 def main():
     instance = Controller(Create().new_project, "Create", main_window(),
-               Create().root, Create().project, Create().buttons)
+                          Create().root, Create().project, Create().buttons)
 
     instance.ui.shots_btn.setEnabled(False)

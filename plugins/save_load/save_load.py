@@ -81,9 +81,9 @@ class SaveLoad(object):
 
         last_file = self.get_last_file(path)
 
-        filepath = concat(path, last_file, separator="/")
+        filepath_ = concat(path, last_file, separator="/")
 
-        return filepath
+        return filepath_
 
     @staticmethod
     def get_last_file(path):
