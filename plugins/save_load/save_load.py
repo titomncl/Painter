@@ -11,6 +11,7 @@ if sys.version_info > (3,):
 from collections import OrderedDict
 
 from CommonTools.concat import concat
+from CommonTools.os_ import glob_path_recursive
 
 from Painter.globals import PROJECT_PATH, ROOT_PATH, PROJECT, PAINTER_EXT
 from Painter.common_ import filepath, save_as, open_file
@@ -122,7 +123,7 @@ class SaveLoad(object):
             save_as(new_filepath)
         else:
             path = os.path.join(item.paths["PATH"], item.name, dpt).replace("\\", "/")
-            path = self.glob_recursive(path, "VERSION")
+            path = glob_path_recursive(path, "VERSION")
 
             filename = concat(item.name, dpt, "001" + PAINTER_EXT, separator="_")
             filepath_ = concat(path, filename, separator="/")
@@ -132,15 +133,8 @@ class SaveLoad(object):
     def load(self, item, dpt):
         path = os.path.join(item.paths["PATH"], item.name, dpt).replace("\\", "/")
 
-        path = self.glob_recursive(path, "VERSION")
+        path = glob_path_recursive(path, "VERSION")
 
         file_ = self.file_to_load(path)
 
         open_file(file_)
-
-    def glob_recursive(self, path, endswith):
-        for dir_path, dirs, _ in os.walk(path):
-            for dir in dirs:
-                file_path = os.path.join(dir_path, dir).replace("\\", "/")
-                if file_path.endswith(endswith):
-                    return file_path
