@@ -108,7 +108,6 @@ class SaveLoad(object):
         Args:
             item: name of the asset
             dpt: department of the file: MOD, RIG, SHD
-
         """
         if self.filepath:
             path, _ = os.path.split(self.filepath)

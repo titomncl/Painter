@@ -53,7 +53,6 @@ def mesh_file(path, name_, quality="LD"):
     filename = concat(name_, "_MOD_", quality, ".abc")
     return concat(path, name_, "MOD", quality, filename, separator="/")
 
-
 def create_project(mesh):
     substance_painter.project.create(mesh_file_path=mesh,
                                      settings=project_settings())
