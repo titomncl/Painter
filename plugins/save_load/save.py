@@ -11,3 +11,5 @@ def main():
     else:
         instance = Controller(save_load.save, "Save", main_window(),
                               SaveLoad().root, SaveLoad().project, SaveLoad().buttons)
+
+        instance.ui.shots_btn.setEnabled(False)

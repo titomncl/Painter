@@ -49,11 +49,9 @@ def project_settings():
     return settings
 
 
-def mesh_file(root, project, type_, name_, quality="LD"):
-    filename = concat(name_, "_MOD_", quality, ".obj")
-    return concat(root, project, "DATA/LIB/PUBLISH", type_, name_, "MOD", quality, filename,
-                  separator="/")
-
+def mesh_file(path, name_, quality="LD"):
+    filename = concat(name_, "_MOD_", quality, ".abc")
+    return concat(path, name_, "MOD", quality, filename, separator="/")
 
 def create_project(mesh):
     substance_painter.project.create(mesh_file_path=mesh,

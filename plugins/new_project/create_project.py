@@ -1,6 +1,17 @@
+import os
+import sys
+
+if sys.version_info > (3,):
+    import typing
+
+    if typing.TYPE_CHECKING:
+        from Odin import Asset, Shot
+        from typing import Optional, Union
+
 from collections import OrderedDict
 
 from CommonTools.concat import concat
+from CommonTools.os_ import glob_path_recursive
 from CommonTools.save_load.controller import Controller
 
 from Painter.globals import PROJECT_PATH, ROOT_PATH, PROJECT, PAINTER_EXT
@@ -30,43 +41,42 @@ class Create(object):
         except TypeError:
             return None
 
-
     @property
     def buttons(self):
         buttons = OrderedDict()
 
-        buttons["SHD"] = {
-            "CHARA": True,
-            "PROPS": True,
-            "SET": True,
-            "FX": False,
-        }
+        buttons["Assets"] = ["SHD"]
+        buttons["Shots"] = []
 
         return buttons
 
-    def save(self, type_="", name_="", task_=""):
-        """
+    @staticmethod
+    def save(item="", dpt=""):
+        # type: (Optional[Union[Asset, Shot]], str) -> None
+        """.
         Args:
-            type_ (str): chara, props, set
-            name_ (str): name of the asset
-            task_ (str): department of the file: MOD, RIG, SHD
-
-        Returns:
-            str, str: versioned and published filepath
+            item: name of the asset
+            dpt: department of the file: MOD, RIG, SHD
 
         """
-        filename = concat(name_, task_, "001" + PAINTER_EXT, separator="_")
-        filepath_ = concat(PROJECT_PATH, "DATA/LIB", type_, name_, task_, "SCENE/VERSION", filename, separator="/")
+        path = os.path.join(item.paths["PATH"], item.name, dpt).replace("\\", "/")
+        path = glob_path_recursive(path, "VERSION")
+
+        filename = concat(item.name, dpt, "001" + PAINTER_EXT, separator="_")
+        filepath_ = concat(path, filename, separator="/")
 
         save_as(filepath_)
 
-    def new_project(self, type_, name_, task_):
-        mesh = mesh_file(self.root, self.project, type_, name_, "LD")
+    def new_project(self, item, dpt):
+        mesh = mesh_file(item.paths["PUBLISH"], item.name, "LD")
 
         create_project(mesh)
 
-        self.save(type_, name_, task_)
+        self.save(item, dpt)
+
 
 def main():
-    Controller(Create().new_project, "Create", main_window(),
-               Create().root, Create().project, Create().buttons)
+    instance = Controller(Create().new_project, "Create", main_window(),
+                          Create().root, Create().project, Create().buttons)
+
+    instance.ui.shots_btn.setEnabled(False)

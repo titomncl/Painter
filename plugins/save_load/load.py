@@ -7,3 +7,5 @@ from Painter.common_ import main_window
 def main():
     instance = Controller(SaveLoad().load, "Load", main_window(),
                           SaveLoad().root, SaveLoad().project, SaveLoad().buttons)
+
+    instance.ui.shots_btn.setEnabled(False)
