@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 
 if sys.version_info > (3,):
@@ -13,7 +14,7 @@ from collections import OrderedDict
 from CommonTools.concat import concat
 from CommonTools.os_ import glob_path_recursive
 
-from Painter.globals import PROJECT_PATH, ROOT_PATH, PROJECT, PAINTER_EXT
+from Painter.globals import PROJECT_PATH, ROOT_PATH, PROJECT, PAINTER_EXT, FILENAME_PATTERN
 from Painter.common_ import filepath, save_as, open_file
 
 
@@ -92,11 +93,13 @@ class SaveLoad(object):
 
         if files:
 
-            maya_files = [f for f in files if PAINTER_EXT in f]
+            file_pattern = re.compile("^" + FILENAME_PATTERN + PAINTER_EXT + "$")
 
-            maya_files.sort()
+            painter_files = list(set([f for f in files if file_pattern.match(f)]))
 
-            last_file = maya_files[-1]
+            painter_files.sort()
+
+            last_file = painter_files[-1]
 
             return last_file
         else:
