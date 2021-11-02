@@ -56,3 +56,7 @@ def mesh_file(path, name_, quality="LD"):
 def create_project(mesh):
     substance_painter.project.create(mesh_file_path=mesh,
                                      settings=project_settings())
+
+
+def export_project_textures(config):
+    return substance_painter.export.export_project_textures(config)

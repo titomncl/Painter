@@ -6,6 +6,7 @@ from Painter.common_ import qt_instance
 
 from Painter.plugins.save_load import save, load
 from Painter.plugins.new_project import create_project
+from Painter.plugins.export_tx import export_tx
 
 
 class Menu:
@@ -35,6 +36,9 @@ class Menu:
         self.add_separator()
         self.add_actions("Save", self.save_action)
         self.add_actions("Load", self.load_action)
+        self.add_separator()
+        self.add_actions("Export Textures", self.export_tx_action)
+        self.add_actions("Publish Textures", self.publish_tx_action)
 
     def new_prj_action(self):
         create_project.main()
@@ -44,6 +48,12 @@ class Menu:
 
     def load_action(self):
         load.main()
+
+    def export_tx_action(self):
+        export_tx.export()
+
+    def publish_tx_action(self):
+        export_tx.export_publish()
 
 
 CUSTOM_MENU_PLUGIN = None
