@@ -1,4 +1,4 @@
-def config(path, asset_name):
+def config(path, asset_name, root_path):
     e_config = {
         "exportShaderParams": False,
         "exportPath": path,
@@ -108,7 +108,7 @@ def config(path, asset_name):
                 }]
         }],
         "exportList": [{
-            "rootPath": "DefaultMaterial",
+            "rootPath": root_path,
         }],
         "exportParameters": []
     }
