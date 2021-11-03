@@ -60,3 +60,12 @@ def create_project(mesh):
 
 def export_project_textures(config):
     return substance_painter.export.export_project_textures(config)
+
+
+def get_texture_set():
+    root_path = [tx_set.name() for tx_set in substance_painter.textureset.all_texture_sets()]
+
+    if len(root_path) == 1:
+        return root_path[-1]
+    else:
+        raise RuntimeError("More than one texture set found.")
