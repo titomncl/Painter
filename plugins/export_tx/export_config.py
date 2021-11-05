@@ -11,19 +11,19 @@ def config(path, asset_name, root_path):
                     "destChannel": "R",
                     "srcChannel": "R",
                     "srcMapType": "documentMap",
-                    "srcMapName": "baseColor"
+                    "srcMapName": "basecolor"
                 },
                 {
                     "destChannel": "G",
                     "srcChannel": "G",
                     "srcMapType": "documentMap",
-                    "srcMapName": "baseColor"
+                    "srcMapName": "basecolor"
                 },
                 {
                     "destChannel": "B",
                     "srcChannel": "B",
                     "srcMapType": "documentMap",
-                    "srcMapName": "baseColor"
+                    "srcMapName": "basecolor"
                 },
                 ],
                 "parameters": {
@@ -39,7 +39,7 @@ def config(path, asset_name, root_path):
                         "destChannel": "L",
                         "srcChannel": "L",
                         "srcMapType": "documentMap",
-                        "srcMapName": "metalness"
+                        "srcMapName": "metallic"
                     }],
                     "parameters": {
                         "fileFormat" : "png",
@@ -51,8 +51,8 @@ def config(path, asset_name, root_path):
                 {
                     "fileName": f"{asset_name}_Roughness(.$udim)",
                     "channels": [{
-                        "destChannel": "L",
-                        "srcChannel": "L",
+                        "destChannel": "R",
+                        "srcChannel": "R",
                         "srcMapType": "documentMap",
                         "srcMapName": "roughness"
                     }],
@@ -68,20 +68,20 @@ def config(path, asset_name, root_path):
                     "channels": [{
                         "destChannel": "R",
                         "srcChannel": "R",
-                        "srcMapType": "documentMap",
-                        "srcMapName": "normal"
+                        "srcMapType": "virtualMap",
+                        "srcMapName": "Normal_OpenGL"
                     },
                         {
                             "destChannel": "G",
                             "srcChannel": "G",
-                            "srcMapType": "documentMap",
-                            "srcMapName": "normal"
+                            "srcMapType": "virtualMap",
+                            "srcMapName": "Normal_OpenGL"
                         },
                         {
                             "destChannel": "B",
                             "srcChannel": "B",
-                            "srcMapType": "documentMap",
-                            "srcMapName": "normal"
+                            "srcMapType": "virtualMap",
+                            "srcMapName": "Normal_OpenGL"
                         },
                     ],
                     "parameters": {
@@ -94,8 +94,8 @@ def config(path, asset_name, root_path):
                 {
                     "fileName": f"{asset_name}_Height(.$udim)",
                     "channels": [{
-                        "destChannel": "L",
-                        "srcChannel": "L",
+                        "destChannel": "R",
+                        "srcChannel": "R",
                         "srcMapType": "documentMap",
                         "srcMapName": "height"
                     }],
