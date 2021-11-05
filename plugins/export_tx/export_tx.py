@@ -6,7 +6,7 @@ from distutils.dir_util import copy_tree
 from CommonTools import os_
 from CommonTools.concat import concat
 from Painter.plugins.export_tx import export_config
-from Painter.common_ import export_project_textures
+from Painter.common_ import export_project_textures, get_texture_set
 
 
 def compute_new_version_folder(path):
@@ -48,7 +48,7 @@ def export():
 
     os_.make_dirs(version_path)
 
-    config = export_config.config(version_path, name)
+    config = export_config.config(version_path, name, get_texture_set())
 
     export_project_textures(config)
 

@@ -1,4 +1,4 @@
-def config(path, asset_name):
+def config(path, asset_name, root_path):
     e_config = {
         "exportShaderParams": False,
         "exportPath": path,
@@ -11,19 +11,19 @@ def config(path, asset_name):
                     "destChannel": "R",
                     "srcChannel": "R",
                     "srcMapType": "documentMap",
-                    "srcMapName": "baseColor"
+                    "srcMapName": "basecolor"
                 },
                 {
                     "destChannel": "G",
                     "srcChannel": "G",
                     "srcMapType": "documentMap",
-                    "srcMapName": "baseColor"
+                    "srcMapName": "basecolor"
                 },
                 {
                     "destChannel": "B",
                     "srcChannel": "B",
                     "srcMapType": "documentMap",
-                    "srcMapName": "baseColor"
+                    "srcMapName": "basecolor"
                 },
                 ],
                 "parameters": {
@@ -39,7 +39,7 @@ def config(path, asset_name):
                         "destChannel": "L",
                         "srcChannel": "L",
                         "srcMapType": "documentMap",
-                        "srcMapName": "metalness"
+                        "srcMapName": "metallic"
                     }],
                     "parameters": {
                         "fileFormat" : "png",
@@ -51,8 +51,8 @@ def config(path, asset_name):
                 {
                     "fileName": f"{asset_name}_Roughness(.$udim)",
                     "channels": [{
-                        "destChannel": "L",
-                        "srcChannel": "L",
+                        "destChannel": "R",
+                        "srcChannel": "R",
                         "srcMapType": "documentMap",
                         "srcMapName": "roughness"
                     }],
@@ -68,20 +68,20 @@ def config(path, asset_name):
                     "channels": [{
                         "destChannel": "R",
                         "srcChannel": "R",
-                        "srcMapType": "documentMap",
-                        "srcMapName": "normal"
+                        "srcMapType": "virtualMap",
+                        "srcMapName": "Normal_OpenGL"
                     },
                         {
                             "destChannel": "G",
                             "srcChannel": "G",
-                            "srcMapType": "documentMap",
-                            "srcMapName": "normal"
+                            "srcMapType": "virtualMap",
+                            "srcMapName": "Normal_OpenGL"
                         },
                         {
                             "destChannel": "B",
                             "srcChannel": "B",
-                            "srcMapType": "documentMap",
-                            "srcMapName": "normal"
+                            "srcMapType": "virtualMap",
+                            "srcMapName": "Normal_OpenGL"
                         },
                     ],
                     "parameters": {
@@ -94,8 +94,8 @@ def config(path, asset_name):
                 {
                     "fileName": f"{asset_name}_Height(.$udim)",
                     "channels": [{
-                        "destChannel": "L",
-                        "srcChannel": "L",
+                        "destChannel": "R",
+                        "srcChannel": "R",
                         "srcMapType": "documentMap",
                         "srcMapName": "height"
                     }],
@@ -108,7 +108,7 @@ def config(path, asset_name):
                 }]
         }],
         "exportList": [{
-            "rootPath": "DefaultMaterial",
+            "rootPath": root_path,
         }],
         "exportParameters": []
     }
